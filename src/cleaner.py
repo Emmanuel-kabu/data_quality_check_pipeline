@@ -196,8 +196,8 @@ class DataCleaner:
             if col not in self.df.columns:
                 continue
 
-            if self.df[col].dtype == object:
-                mask = self.df[col].isna() | (self.df[col].fillna("").str.strip().isin(["", "nan"]))
+            if pd.api.types.is_string_dtype(self.df[col]) or self.df[col].dtype == object:
+                mask = self.df[col].isna() | (self.df[col].fillna("").astype(str).str.strip().isin(["", "nan"]))
             else:
                 mask = self.df[col].isna()
 
@@ -220,10 +220,11 @@ class DataCleaner:
     def strip_whitespace(self) -> pd.DataFrame:
         """Remove leading/trailing whitespace from all string columns."""
         logger.info("Stripping whitespace...")
-        for col in self.df.select_dtypes(include=["object"]).columns:
-            self.df[col] = self.df[col].apply(
-                lambda x: x.strip() if isinstance(x, str) else x
-            )
+        for col in self.df.columns:
+            if pd.api.types.is_string_dtype(self.df[col]) or self.df[col].dtype == object:
+                self.df[col] = self.df[col].apply(
+                    lambda x: x.strip() if isinstance(x, str) else x
+                )
         return self.df
 
     # ------------------------------------------------------------------

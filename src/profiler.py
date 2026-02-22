@@ -49,8 +49,8 @@ class DataProfiler:
         for col in self.df.columns:
             missing = self.df[col].isna().sum()
             # Also check for empty strings
-            if self.df[col].dtype == object:
-                empty_str = (self.df[col].fillna("").str.strip() == "").sum()
+            if pd.api.types.is_string_dtype(self.df[col]):
+                empty_str = (self.df[col].fillna("").astype(str).str.strip() == "").sum()
                 missing = max(missing, empty_str)
 
             present = self.total_rows - missing
@@ -68,15 +68,15 @@ class DataProfiler:
                     "column": col,
                     "description": f"{missing} missing value(s) ({100 - pct}% incomplete)",
                     "severity": "High" if col in ("customer_id", "email") else "Medium",
-                    "rows": self._get_missing_row_indices(col),
+                    "rows": self.get_missing_row_indices(col),
                 })
         return self.completeness
 
-    def _get_missing_row_indices(self, col: str) -> list[int]:
+    def get_missing_row_indices(self, col: str) -> list[int]:
         """Return 1-based row indices where a column is missing or empty."""
         mask = self.df[col].isna()
-        if self.df[col].dtype == object:
-            mask = mask | (self.df[col].fillna("").str.strip() == "")
+        if pd.api.types.is_string_dtype(self.df[col]):
+            mask = mask | (self.df[col].fillna("").astype(str).str.strip() == "")
         return (mask[mask].index + 1).tolist()
 
     # ------------------------------------------------------------------
@@ -96,13 +96,13 @@ class DataProfiler:
             if expected == "integer":
                 match = pd.api.types.is_integer_dtype(self.df[col])
             elif expected == "string":
-                match = self.df[col].dtype == object
+                match = pd.api.types.is_string_dtype(self.df[col]) or self.df[col].dtype == object
             elif expected == "numeric":
                 match = pd.api.types.is_numeric_dtype(self.df[col])
             elif expected == "date":
                 match = pd.api.types.is_datetime64_any_dtype(self.df[col])
             elif expected == "categorical":
-                match = self.df[col].dtype == object
+                match = pd.api.types.is_string_dtype(self.df[col]) or self.df[col].dtype == object
 
             status = "✓" if match else "✗"
             note = ""
@@ -126,7 +126,7 @@ class DataProfiler:
                     "column": col,
                     "description": f"Expected {expected.upper()} but got {actual_dtype}",
                     "severity": "High",
-                    "rows": [],
+                    "rows": self.get_missing_row_indices(col),
                 })
         return self.type_checks
 
@@ -151,7 +151,7 @@ class DataProfiler:
         formats_found: dict[str, list] = {}
         for idx, val in self.df["phone"].dropna().items():
             val_str = str(val).strip()
-            fmt = self._detect_phone_format(val_str)
+            fmt = self.detect_phone_format(val_str)
             formats_found.setdefault(fmt, []).append({"row": idx + 1, "value": val_str})
 
         for fmt, examples in formats_found.items():
@@ -174,7 +174,7 @@ class DataProfiler:
                 })
 
     @staticmethod
-    def _detect_phone_format(phone: str) -> str:
+    def detect_phone_format(phone: str) -> str:
         """Return a human-readable description of the phone format."""
         import re
         if re.match(r"^\d{3}-\d{3}-\d{4}$", phone):

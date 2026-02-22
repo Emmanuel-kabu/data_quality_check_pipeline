@@ -273,14 +273,14 @@ class DataValidator:
             val_str = str(val).strip().lower() if pd.notna(val) else ""
 
             if not val_str or val_str == "nan":
-                self.add_failure(
+                self._add_failure(
                     row, col, val, "not_null",
                     "Missing account_status (should be one of: active, inactive, suspended)"
                 )
                 continue
 
             if val_str not in VALID_ACCOUNT_STATUSES:
-                self.add_failure(
+                self._add_failure(
                     row, col, val_str, "allowed_value",
                     f"'{val_str}' is not a valid status (allowed: active, inactive, suspended)"
                 )
@@ -323,8 +323,8 @@ class DataValidator:
     # ------------------------------------------------------------------
     # Helpers
     # ------------------------------------------------------------------
-    def add_failure(self, row: int, column: str, value: Any,
-                     rule: str, message: str) -> None:
+    def _add_failure(self, row: int, column: str, value: Any,
+                      rule: str, message: str) -> None:
         """Record a validation failure."""
         self.failures.append(ValidationFailure(row, column, value, rule, message))
 
