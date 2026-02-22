@@ -1,0 +1,53 @@
+VALIDATION RESULTS
+============================================================
+Generated: 2026-02-22 11:29:43
+Dataset: customers_raw.csv
+
+PASS: 2 rows passed all checks
+FAIL: 8 rows failed
+Failed rows: [2, 3, 4, 5, 6, 8, 9, 10]
+
+FAILURES BY COLUMN:
+----------------------------------------
+
+  first_name:
+    - Row 3: Empty (should be non-empty) [value: (empty)]
+
+  last_name:
+    - Row 5: Empty (should be non-empty) [value: (empty)]
+    - Row 8: 'wilson' should be title case ('Wilson') [value: wilson]
+
+  email:
+    - Row 6: 'PATRICIA.DAVIS@GMAIL.COM' contains uppercase (should be lowercase) [value: PATRICIA.DAVIS@GMAIL.COM]
+
+  phone:
+    - Row 3: Non-standard format (should be XXX-XXX-XXXX) [value: (555) 234-5678]
+    - Row 8: Non-standard format (should be XXX-XXX-XXXX) [value: 555.789.0123]
+    - Row 9: Non-standard format (should be XXX-XXX-XXXX) [value: 5557890123]
+
+  date_of_birth:
+    - Row 4: Wrong format 'YYYY/MM/DD' (should be YYYY-MM-DD) [value: 1975/05/10]
+    - Row 6: 'invalid_date' is not a valid date value [value: invalid_date]
+
+  created_date:
+    - Row 5: Wrong format 'MM/DD/YYYY' (should be YYYY-MM-DD) [value: 01/15/2024]
+    - Row 10: 'invalid_date' is not a valid date value [value: invalid_date]
+
+  address:
+    - Row 2: Missing address [value: (empty)]
+    - Row 9: Missing address [value: (empty)]
+
+  income:
+    - Row 3: Missing income [value: (empty)]
+
+  account_status:
+    - Row 4: Missing account_status (should be one of: active, inactive, suspended) [value: (empty)]
+
+SUMMARY BY RULE TYPE:
+----------------------------------------
+  - date_format: 2 failure(s)
+  - email_case: 1 failure(s)
+  - not_null: 6 failure(s)
+  - phone_format: 3 failure(s)
+  - title_case: 1 failure(s)
+  - valid_date: 2 failure(s)

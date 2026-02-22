@@ -1,0 +1,66 @@
+PII DETECTION REPORT
+============================================================
+Generated: 2026-02-22 11:29:43
+Dataset: customers_raw.csv
+Total Rows: 10
+
+RISK ASSESSMENT:
+----------------------------------------
+  HIGH RISK:
+    - first_name, last_name
+      Reason: Direct or quasi-identifier — enables re-identification
+    - email, phone
+      Reason: Direct or quasi-identifier — enables re-identification
+    - date_of_birth, address
+      Reason: Direct or quasi-identifier — enables re-identification
+  MEDIUM RISK:
+    - income
+      Reason: Financial sensitivity — income data
+
+DETECTED PII:
+----------------------------------------
+  - Emails found: 10 (100%)
+  - Phone numbers found: 10 (100%)
+  - Names (first + last) found: 10 (100%)
+  - Addresses found: 10 (100%)
+  - Dates of birth found: 9 (90%)
+
+DETAILED FINDINGS:
+----------------------------------------
+  Emails:
+    Row 1: john.doe@gmail.com
+    Row 2: jane.smith@company.com
+    Row 3: bob.johnson@email.com
+  Phone numbers:
+    Row 1: 555-123-4567
+    Row 2: 555-987-6543
+    Row 3: 555-234-5678
+  Names (first + last):
+    Row 1: John Doe
+    Row 2: Jane Smith
+    Row 3: [UNKNOWN] Johnson
+  Addresses:
+    Row 1: 123 Main St New York NY 10001
+    Row 2: [UNKNOWN]
+    Row 3: 456 Oak Ave Los Angeles CA 90001
+  Dates of birth:
+    Row 1: 1985-03-15
+    Row 2: 1990-07-22
+    Row 3: 1988-11-08
+
+EXPOSURE RISK:
+----------------------------------------
+  If this dataset were breached, attackers could:
+    - Phish customers using exposed email addresses
+    - Spoof identities using names + DOB + address combinations
+    - Social-engineer targets using phone numbers
+    - Infer financial status from income data
+    - Build comprehensive profiles combining all PII fields
+
+MITIGATION:
+----------------------------------------
+  - Mask all PII before sharing with analytics teams
+  - Encrypt PII at rest and in transit
+  - Apply role-based access control to raw data
+  - Implement data retention policies
+  - Log all access to PII columns for auditing

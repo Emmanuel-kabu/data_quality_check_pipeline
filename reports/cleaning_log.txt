@@ -1,0 +1,43 @@
+DATA CLEANING LOG
+============================================================
+Generated: 2026-02-22 11:29:43
+Dataset: customers_raw.csv -> customers_cleaned.csv
+
+ACTIONS TAKEN:
+----------------------------------------
+
+  Normalization:
+    - Phone format: Converted to XXX-XXX-XXXX (3 rows affected)
+      Affected rows: [3, 8, 9]
+    - Date format (date_of_birth): Converted to YYYY-MM-DD (1 rows affected)
+      Affected rows: [4]
+    - Date format (created_date): Converted to YYYY-MM-DD (1 rows affected)
+      Affected rows: [5]
+    - Name case (last_name): Applied title case (1 rows affected)
+      Affected rows: [8]
+    - Email case: Lowered to standard format (1 rows affected)
+      Affected rows: [6]
+
+  Missing Values:
+    - first_name: 1 row(s) missing -> filled with '[UNKNOWN]'
+      Affected rows: [3]
+    - last_name: 1 row(s) missing -> filled with '[UNKNOWN]'
+      Affected rows: [5]
+    - address: 2 row(s) missing -> filled with '[UNKNOWN]'
+      Affected rows: [2, 9]
+    - income: 1 row(s) missing -> filled with '0'
+      Affected rows: [3]
+    - account_status: 1 row(s) missing -> filled with 'unknown'
+      Affected rows: [4]
+
+VALIDATION AFTER CLEANING:
+----------------------------------------
+  - Before cleaning: 8 rows failed validation
+  - After cleaning:  7 rows failed validation
+  - Status: PARTIAL PASS
+
+OUTPUT:
+----------------------------------------
+  - File: customers_cleaned.csv
+  - Rows: 10
+  - Columns: 10

@@ -1,0 +1,77 @@
+PIPELINE EXECUTION REPORT
+============================================================
+Start Time:  2026-02-22 11:29:43
+End Time:    2026-02-22 11:29:43
+Duration:    0.11 seconds
+
+Stage: LOAD
+  Status: ✓ SUCCESS
+  ✓ Loaded customers_raw.csv
+  ✓ 10 rows, 10 columns
+
+Stage: PROFILE
+  Status: ✓ SUCCESS
+  ✓ first_name: 1 missing (90.0% complete)
+  ✓ last_name: 1 missing (90.0% complete)
+  ✓ address: 2 missing (80.0% complete)
+  ✓ income: 1 missing (90.0% complete)
+  ✓ account_status: 1 missing (90.0% complete)
+  ✓ Total quality issues found: 32
+
+Stage: VALIDATE (pre-clean)
+  Status: ✓ SUCCESS
+  ✓ Passed: 2 rows
+  ✓ Failed: 8 rows
+  ✓ Total failures: 15
+
+Stage: CLEAN
+  Status: ✓ SUCCESS
+  ✓ Phone format: Converted to XXX-XXX-XXXX (3 rows affected)
+  ✓ Date format (date_of_birth): Converted to YYYY-MM-DD (1 rows affected)
+  ✓ Date format (created_date): Converted to YYYY-MM-DD (1 rows affected)
+  ✓ Name case (last_name): Applied title case (1 rows affected)
+  ✓ Email case: Lowered to standard format (1 rows affected)
+  ✓ first_name: 1 row(s) missing -> filled with '[UNKNOWN]'
+  ✓ last_name: 1 row(s) missing -> filled with '[UNKNOWN]'
+  ✓ address: 2 row(s) missing -> filled with '[UNKNOWN]'
+  ✓ income: 1 row(s) missing -> filled with '0'
+  ✓ account_status: 1 row(s) missing -> filled with 'unknown'
+  ✓ Validation before: 8 rows failed
+  ✓ Validation after:  7 rows failed
+
+Stage: DETECT PII
+  Status: ✓ SUCCESS
+  ✓ email: 10 found
+  ✓ phone: 10 found
+  ✓ names: 10 found
+  ✓ address: 10 found
+  ✓ date_of_birth: 9 found
+
+Stage: MASK PII
+  Status: ✓ SUCCESS
+  ✓ Names masked: 20
+  ✓ Emails masked: 10
+  ✓ Phones masked: 10
+  ✓ Addresses masked: 10
+  ✓ DOBs masked: 9
+
+SUMMARY:
+----------------------------------------
+  Input:   10 rows (messy)
+  Cleaned: 10 rows (clean, validated)
+  Masked:  10 rows (PII protected)
+  Quality: PASS
+  PII Risk: MITIGATED (all masked)
+
+OUTPUT FILES:
+----------------------------------------
+  - customers_cleaned.csv
+  - customers_masked.csv
+  - data_quality_report.txt
+  - pii_detection_report.txt
+  - validation_results.txt
+  - cleaning_log.txt
+  - masked_sample.txt
+  - pipeline_execution_report.txt
+
+Status: SUCCESS ✓

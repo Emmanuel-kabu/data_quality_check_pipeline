@@ -1,0 +1,26 @@
+PII MASKING REPORT
+============================================================
+Generated: 2026-02-22 11:29:43
+
+BEFORE MASKING (first 2 rows):
+----------------------------------------
+customer_id, first_name, last_name, email, phone, date_of_birth, address, income, account_status, created_date
+1, John, Doe, john.doe@gmail.com, 555-123-4567, 1985-03-15, 123 Main St New York NY 10001, 75000.0, active, 2024-01-10
+2, Jane, Smith, jane.smith@company.com, 555-987-6543, 1990-07-22, [UNKNOWN], 95000.0, active, 2024-01-11
+
+AFTER MASKING (first 2 rows):
+----------------------------------------
+customer_id, first_name, last_name, email, phone, date_of_birth, address, income, account_status, created_date
+1, J***, D***, j***@gmail.com, ***-***-4567, 1985-**-**, [MASKED ADDRESS], 75000.0, active, 2024-01-10
+2, J***, S***, j***@company.com, ***-***-6543, 1990-**-**, [UNKNOWN], 95000.0, active, 2024-01-11
+
+ANALYSIS:
+----------------------------------------
+  - Data structure preserved (still 10 rows, 10 columns)
+  - Names masked: 20 fields
+  - Emails masked: 10 fields
+  - Phones masked: 10 fields
+  - Addresses masked: 10 fields
+  - DOBs masked: 9 fields
+  - Business data intact (income, account_status, created_date available)
+  - Use case: Safe for analytics team (GDPR compliant)

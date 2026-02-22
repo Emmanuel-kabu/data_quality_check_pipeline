@@ -1,0 +1,66 @@
+DATA QUALITY PROFILE REPORT
+============================================================
+Generated: 2026-02-22 11:29:43
+Dataset: customers_raw.csv
+Total Rows: 10
+Total Columns: 10
+
+COMPLETENESS:
+----------------------------------------
+  - customer_id: 100.0%
+  - first_name: 90.0% (1 missing)
+  - last_name: 90.0% (1 missing)
+  - email: 100.0%
+  - phone: 100.0%
+  - date_of_birth: 100.0%
+  - address: 80.0% (2 missing)
+  - income: 90.0% (1 missing)
+  - account_status: 90.0% (1 missing)
+  - created_date: 100.0%
+
+DATA TYPES:
+----------------------------------------
+  - customer_id: INTEGER ✓
+  - first_name: STRING ✓
+  - last_name: STRING ✓
+  - email: STRING ✓
+  - phone: STRING ✓
+  - date_of_birth: DATE ✗ (should be DATE, stored as str)
+  - address: STRING ✓
+  - income: NUMERIC ✓
+  - account_status: CATEGORICAL ✓
+  - created_date: DATE ✗ (should be DATE, stored as str)
+
+QUALITY ISSUES:
+----------------------------------------
+  1. [Medium] Missing Values in 'first_name': 1 missing value(s) (10.0% incomplete), Rows: [3]
+  2. [Medium] Missing Values in 'last_name': 1 missing value(s) (10.0% incomplete), Rows: [5]
+  3. [Medium] Missing Values in 'address': 2 missing value(s) (20.0% incomplete), Rows: [2, 9]
+  4. [Medium] Missing Values in 'income': 1 missing value(s) (10.0% incomplete), Rows: [3]
+  5. [Medium] Missing Values in 'account_status': 1 missing value(s) (10.0% incomplete), Rows: [4]
+  6. [High] Wrong Data Type in 'date_of_birth': Expected DATE but got str
+  7. [High] Wrong Data Type in 'created_date': Expected DATE but got str
+  8. [Medium] Non-standard Phone Format in 'phone': Format '(XXX) XXX-XXXX' found in 1 row(s), Rows: [3]
+  9. [Medium] Non-standard Phone Format in 'phone': Format 'XXX.XXX.XXXX' found in 1 row(s), Rows: [8]
+  10. [Medium] Non-standard Phone Format in 'phone': Format 'XXXXXXXXXX (no separators)' found in 1 row(s), Rows: [9]
+  11. [Medium] Non-standard Date Format in 'date_of_birth': Row 4: '1975/05/10' uses YYYY/MM/DD instead of YYYY-MM-DD, Rows: [4]
+  12. [Critical] Invalid Date Value in 'date_of_birth': Row 6: 'invalid_date' is not a valid date, Rows: [6]
+  13. [Medium] Non-standard Date Format in 'created_date': Row 5: '01/15/2024' uses MM/DD/YYYY instead of YYYY-MM-DD, Rows: [5]
+  14. [Critical] Invalid Date Value in 'created_date': Row 10: 'invalid_date' is not a valid date, Rows: [10]
+  15. [Low] Email Case Issue in 'email': Row 6: 'PATRICIA.DAVIS@GMAIL.COM' contains uppercase characters, Rows: [6]
+  16. [Low] Name Case Issue in 'last_name': Row 8: 'wilson' is not title case, Rows: [8]
+
+SEVERITY SUMMARY:
+----------------------------------------
+  - Critical (blocks processing): 2
+  - High (data incorrect):        2
+  - Medium (needs cleaning):      10
+  - Low (cosmetic):               2
+
+ESTIMATED IMPACT:
+----------------------------------------
+  - 1 rows have missing first_name = 10% incomplete
+  - 1 rows have missing last_name = 10% incomplete
+  - 2 rows have missing address = 20% incomplete
+  - 1 rows have missing income = 10% incomplete
+  - 1 rows have missing account_status = 10% incomplete
