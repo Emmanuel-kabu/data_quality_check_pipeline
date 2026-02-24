@@ -51,9 +51,9 @@ class DataValidator:
         self.passed_rows: set[int] = set()
         self.failed_rows: set[int] = set()
 
-    # ------------------------------------------------------------------
+    
     # Individual column validators
-    # ------------------------------------------------------------------
+    
     def validate_customer_id(self) -> None:
         """Validate customer_id: unique, positive integer."""
         col = "customer_id"
@@ -320,9 +320,9 @@ class DataValidator:
             "failed_rows": sorted(self.failed_rows),
         }
 
-    # ------------------------------------------------------------------
+    
     # Helpers
-    # ------------------------------------------------------------------
+    
     def _add_failure(self, row: int, column: str, value: Any,
                       rule: str, message: str) -> None:
         """Record a validation failure."""
@@ -337,7 +337,7 @@ class DataValidator:
 
     # ------------------------------------------------------------------
     # Report generation
-    # ------------------------------------------------------------------
+    
     def generate_report(self, filepath=None) -> str:
         """Generate a formatted validation results report."""
         filepath = filepath or VALIDATION_RESULTS
