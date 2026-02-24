@@ -44,9 +44,9 @@ class DataCleaner:
         }
         self.missing_value_fills: dict[str, list[int]] = {}
 
-    # ------------------------------------------------------------------
+    
     # Phone normalization
-    # ------------------------------------------------------------------
+    
     def normalize_phones(self) -> pd.DataFrame:
         """Convert all phone formats to XXX-XXX-XXXX."""
         logger.info("Normalizing phone numbers...")
@@ -77,9 +77,9 @@ class DataCleaner:
 
         return self.df
 
-    # ------------------------------------------------------------------
+    
     # Date normalization
-    # ------------------------------------------------------------------
+    
     def normalize_dates(self) -> pd.DataFrame:
         """Convert all date columns to YYYY-MM-DD format."""
         logger.info("Normalizing date formats...")
@@ -126,9 +126,9 @@ class DataCleaner:
                 "rows": affected_rows,
             })
 
-    # ------------------------------------------------------------------
+    
     # Name normalization
-    # ------------------------------------------------------------------
+    
     def normalize_names(self) -> pd.DataFrame:
         """Apply title case to first_name and last_name."""
         logger.info("Normalizing name casing...")
@@ -156,9 +156,9 @@ class DataCleaner:
                 })
         return self.df
 
-    # ------------------------------------------------------------------
+    
     # Email normalization
-    # ------------------------------------------------------------------
+    
     def normalize_emails(self) -> pd.DataFrame:
         """Lowercase all email addresses."""
         logger.info("Normalizing email casing...")
@@ -185,9 +185,9 @@ class DataCleaner:
             })
         return self.df
 
-    # ------------------------------------------------------------------
+    
     # Handle missing values
-    # ------------------------------------------------------------------
+    
     def handle_missing_values(self) -> pd.DataFrame:
         """Fill missing values according to the configured strategy."""
         logger.info("Handling missing values...")
@@ -214,9 +214,9 @@ class DataCleaner:
 
         return self.df
 
-    # ------------------------------------------------------------------
+    
     # Strip whitespace
-    # ------------------------------------------------------------------
+    
     def strip_whitespace(self) -> pd.DataFrame:
         """Remove leading/trailing whitespace from all string columns."""
         logger.info("Stripping whitespace...")
@@ -241,9 +241,9 @@ class DataCleaner:
         self.handle_missing_values()
         return self.df
 
-    # ------------------------------------------------------------------
+    
     # Save cleaned data
-    # ------------------------------------------------------------------
+    
     def save_cleaned_data(self, filepath=None) -> str:
         """Save the cleaned DataFrame to CSV."""
         filepath = filepath or CLEANED_CSV
@@ -252,9 +252,9 @@ class DataCleaner:
         logger.info("Cleaned data saved to %s", filepath)
         return str(filepath)
 
-    # ------------------------------------------------------------------
+    
     # Report generation
-    # ------------------------------------------------------------------
+    
     def generate_report(self, validation_before: int = 0,
                         validation_after: int = 0,
                         filepath=None) -> str:
