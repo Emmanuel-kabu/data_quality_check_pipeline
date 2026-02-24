@@ -1,0 +1,20 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  - "alerts.yml"
+
+scrape_configs:
+  - job_name: "data_quality_pipeline"
+    static_configs:
+      - targets: ["pipeline:9090"]
+    metrics_path: "/metrics"
+    scrape_interval: 30s
+
+  # File-based service discovery for metrics exported by pipeline
+  - job_name: "dq_file_metrics"
+    file_sd_configs:
+      - files:
+          - "/etc/prometheus/targets.json"
+        refresh_interval: 60s

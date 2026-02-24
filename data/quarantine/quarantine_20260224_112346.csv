@@ -1,0 +1,2 @@
+customer_id,first_name,last_name,email,phone,date_of_birth,address,income,account_status,created_date,_dlq_reason,_dlq_severity,_dlq_stage,_dlq_timestamp
+4,Mary,Brown,mary.brown@gmail.com,555-345-6789,1975-05-10,789 Pine Rd Chicago IL 60601,120000.0,unknown,2024-01-13,"'unknown' is not a valid status (allowed: active, inactive, suspended)",HIGH,post_clean_validation,2026-02-24T11:24:31.056404

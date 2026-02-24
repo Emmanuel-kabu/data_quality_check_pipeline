@@ -1,0 +1,66 @@
+# HELP dq_total_rows Total rows processed
+# TYPE dq_total_rows gauge
+dq_total_rows{run_id="20260224_112346"} 10
+# HELP dq_passed_rows Rows that passed validation
+# TYPE dq_passed_rows gauge
+dq_passed_rows{run_id="20260224_112346"} 2
+# HELP dq_failed_rows Rows that failed validation
+# TYPE dq_failed_rows gauge
+dq_failed_rows{run_id="20260224_112346"} 8
+# HELP dq_quarantined_rows Rows quarantined in DLQ
+# TYPE dq_quarantined_rows gauge
+dq_quarantined_rows{run_id="20260224_112346"} 1
+# HELP dq_pass_rate_pct Validation pass rate percentage
+# TYPE dq_pass_rate_pct gauge
+dq_pass_rate_pct{run_id="20260224_112346"} 20.0
+# HELP dq_completeness_pct Data completeness percentage
+# TYPE dq_completeness_pct gauge
+dq_completeness_pct{run_id="20260224_112346"} 0
+# HELP dq_outlier_count Number of statistical outliers
+# TYPE dq_outlier_count gauge
+dq_outlier_count{run_id="20260224_112346"} 0
+# HELP dq_duration_seconds Pipeline execution duration
+# TYPE dq_duration_seconds gauge
+dq_duration_seconds{run_id="20260224_112346"} 44.51
+# HELP dq_rows_per_second Processing throughput
+# TYPE dq_rows_per_second gauge
+dq_rows_per_second{run_id="20260224_112346"} 0.22
+# HELP dq_pii_fields_total Total PII fields detected
+# TYPE dq_pii_fields_total gauge
+dq_pii_fields_total{run_id="20260224_112346"} 49
+# HELP dq_pii_masked_fields Total PII fields masked
+# TYPE dq_pii_masked_fields gauge
+dq_pii_masked_fields{run_id="20260224_112346"} 59
+# HELP dq_stage_load_duration_ms Stage duration in ms
+# TYPE dq_stage_load_duration_ms gauge
+dq_stage_load_duration_ms{run_id="20260224_112346"} 1145.8840370178223
+# HELP dq_stage_profile_duration_ms Stage duration in ms
+# TYPE dq_stage_profile_duration_ms gauge
+dq_stage_profile_duration_ms{run_id="20260224_112346"} 17.00878143310547
+# HELP dq_stage_contract_duration_ms Stage duration in ms
+# TYPE dq_stage_contract_duration_ms gauge
+dq_stage_contract_duration_ms{run_id="20260224_112346"} 10.039091110229492
+# HELP dq_stage_validate_duration_ms Stage duration in ms
+# TYPE dq_stage_validate_duration_ms gauge
+dq_stage_validate_duration_ms{run_id="20260224_112346"} 2.997875213623047
+# HELP dq_stage_statistical_duration_ms Stage duration in ms
+# TYPE dq_stage_statistical_duration_ms gauge
+dq_stage_statistical_duration_ms{run_id="20260224_112346"} 14.598846435546875
+# HELP dq_stage_clean_duration_ms Stage duration in ms
+# TYPE dq_stage_clean_duration_ms gauge
+dq_stage_clean_duration_ms{run_id="20260224_112346"} 11.073589324951172
+# HELP dq_stage_quarantine_duration_ms Stage duration in ms
+# TYPE dq_stage_quarantine_duration_ms gauge
+dq_stage_quarantine_duration_ms{run_id="20260224_112346"} 6.000280380249023
+# HELP dq_stage_ge_validate_duration_ms Stage duration in ms
+# TYPE dq_stage_ge_validate_duration_ms gauge
+dq_stage_ge_validate_duration_ms{run_id="20260224_112346"} 3.9997100830078125
+# HELP dq_stage_detect_pii_duration_ms Stage duration in ms
+# TYPE dq_stage_detect_pii_duration_ms gauge
+dq_stage_detect_pii_duration_ms{run_id="20260224_112346"} 2.9997825622558594
+# HELP dq_stage_mask_pii_duration_ms Stage duration in ms
+# TYPE dq_stage_mask_pii_duration_ms gauge
+dq_stage_mask_pii_duration_ms{run_id="20260224_112346"} 6.000518798828125
+# HELP dq_stage_version_duration_ms Stage duration in ms
+# TYPE dq_stage_version_duration_ms gauge
+dq_stage_version_duration_ms{run_id="20260224_112346"} 4.771709442138672

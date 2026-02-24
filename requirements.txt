@@ -1,3 +1,23 @@
+# Core
 pandas>=2.0.0
 numpy>=1.24.0
+python-dotenv>=1.0.0
+
+# Testing
 pytest>=7.0.0
+
+# Validation
+great-expectations>=0.18.0
+
+# Metrics & monitoring
+prometheus-client>=0.20.0
+
+# Orchestration (install separately for Airflow)
+# apache-airflow>=2.8.0
+
+# Cloud storage (optional — install the one you need)
+boto3>=1.34.0              # AWS S3
+# google-cloud-storage>=2.14.0  # Google Cloud Storage
+
+# Notifications (standard library covers email; requests for Slack/PagerDuty)
+requests>=2.31.0

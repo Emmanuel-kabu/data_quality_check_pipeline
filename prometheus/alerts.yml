@@ -1,0 +1,56 @@
+groups:
+  - name: data_quality_alerts
+    rules:
+      - alert: LowPassRate
+        expr: dq_pass_rate_pct < 90
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Data quality pass rate below 90%"
+          description: "Current pass rate is {{ $value }}%"
+
+      - alert: CriticalPassRate
+        expr: dq_pass_rate_pct < 80
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "CRITICAL: Data quality pass rate below 80%"
+          description: "Current pass rate is {{ $value }}%. Pipeline may need human review."
+
+      - alert: HighQuarantineRate
+        expr: dq_quarantined_rows > 10
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High number of quarantined rows"
+          description: "{{ $value }} rows in dead letter queue"
+
+      - alert: LowCompleteness
+        expr: dq_completeness_pct < 90
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Data completeness below 90%"
+          description: "Current completeness is {{ $value }}%"
+
+      - alert: SlowPipeline
+        expr: dq_duration_seconds > 120
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Pipeline execution exceeding 2 minutes"
+          description: "Pipeline took {{ $value }} seconds"
+
+      - alert: ManyOutliers
+        expr: dq_outlier_count > 10
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High number of statistical outliers"
+          description: "{{ $value }} outliers detected in current run"

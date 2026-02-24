@@ -1,0 +1,26 @@
+STATISTICAL VALIDATION REPORT
+============================================================
+Generated: 2026-02-24 11:23:47
+Total Rows: 10
+
+STATISTICAL SUMMARY:
+----------------------------------------
+  income:
+    Mean:         92,000.00
+    Median:       95,000.00
+    Std Dev:      19,672.32
+    Q1:           82,000.00
+    Q3:           105,000.00
+    IQR:          23,000.00
+    Lower Bound:  47,500.00
+    Upper Bound:  139,500.00
+    Outliers:     0
+
+OUTLIERS DETECTED:
+----------------------------------------
+  income: No outliers detected
+
+DATE DISTRIBUTION ISSUES:
+----------------------------------------
+  Row 0: created_date — Unusual clustering: 9/9 dates in month 1 [MEDIUM]
+  Row 0: created_date — Unusual clustering: 9/9 dates in month 1 [MEDIUM]

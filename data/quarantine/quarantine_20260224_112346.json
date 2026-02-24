@@ -1,0 +1,31 @@
+{
+  "run_id": "20260224_112346",
+  "timestamp": "2026-02-24T11:24:31.056404",
+  "total_quarantined": 1,
+  "summary": {
+    "HIGH": 1
+  },
+  "records": [
+    {
+      "row_index": 4,
+      "row_data": {
+        "customer_id": 4,
+        "first_name": "Mary",
+        "last_name": "Brown",
+        "email": "mary.brown@gmail.com",
+        "phone": "555-345-6789",
+        "date_of_birth": "1975-05-10",
+        "address": "789 Pine Rd Chicago IL 60601",
+        "income": 120000.0,
+        "account_status": "unknown",
+        "created_date": "2024-01-13"
+      },
+      "reason": "'unknown' is not a valid status (allowed: active, inactive, suspended)",
+      "severity": "HIGH",
+      "stage": "post_clean_validation",
+      "timestamp": "2026-02-24T11:24:31.056404",
+      "status": "quarantined",
+      "retry_count": 0
+    }
+  ]
+}

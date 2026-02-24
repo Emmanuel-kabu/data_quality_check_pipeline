@@ -1,0 +1,102 @@
+{
+  "run_id": "20260224_112346",
+  "timestamp": "2026-02-24T11:23:46.569871",
+  "stages": {
+    "load": {
+      "status": "SUCCESS",
+      "duration_ms": 1145.8840370178223,
+      "timestamp": "2026-02-24T11:23:47.716753",
+      "rows": 10,
+      "cols": 10
+    },
+    "profile": {
+      "status": "SUCCESS",
+      "duration_ms": 17.00878143310547,
+      "timestamp": "2026-02-24T11:23:47.735734",
+      "issues": 32
+    },
+    "contract": {
+      "status": "WARNING",
+      "duration_ms": 10.039091110229492,
+      "timestamp": "2026-02-24T11:23:47.746774",
+      "violations": 4
+    },
+    "validate": {
+      "status": "SUCCESS",
+      "duration_ms": 2.997875213623047,
+      "timestamp": "2026-02-24T11:23:47.750780",
+      "passed": 2,
+      "failed": 8
+    },
+    "statistical": {
+      "status": "SUCCESS",
+      "duration_ms": 14.598846435546875,
+      "timestamp": "2026-02-24T11:23:47.765379",
+      "outliers": 0
+    },
+    "clean": {
+      "status": "SUCCESS",
+      "duration_ms": 11.073589324951172,
+      "timestamp": "2026-02-24T11:24:31.054404",
+      "before_failures": 8,
+      "after_failures": 7
+    },
+    "quarantine": {
+      "status": "SUCCESS",
+      "duration_ms": 6.000280380249023,
+      "timestamp": "2026-02-24T11:24:31.060405",
+      "quarantined": 1
+    },
+    "ge_validate": {
+      "status": "SUCCESS",
+      "duration_ms": 3.9997100830078125,
+      "timestamp": "2026-02-24T11:24:31.065404",
+      "pass_rate": 100.0
+    },
+    "detect_pii": {
+      "status": "SUCCESS",
+      "duration_ms": 2.9997825622558594,
+      "timestamp": "2026-02-24T11:24:31.068404",
+      "total_pii": 49
+    },
+    "mask_pii": {
+      "status": "SUCCESS",
+      "duration_ms": 6.000518798828125,
+      "timestamp": "2026-02-24T11:24:31.074404",
+      "masked": 59
+    },
+    "version": {
+      "status": "SUCCESS",
+      "duration_ms": 4.771709442138672,
+      "timestamp": "2026-02-24T11:24:31.079176"
+    }
+  },
+  "quality": {
+    "total_rows": 10,
+    "passed_rows": 2,
+    "failed_rows": 8,
+    "quarantined_rows": 1,
+    "pass_rate_pct": 20.0,
+    "failure_rate_pct": 80.0,
+    "completeness_pct": 0,
+    "accuracy_pct": 0,
+    "outlier_count": 0
+  },
+  "performance": {
+    "total_duration_seconds": 44.51,
+    "rows_per_second": 0.22
+  },
+  "alerts": [],
+  "pii": {
+    "total_pii_fields": 49,
+    "masked_fields": 59,
+    "masking_coverage_pct": 120.41,
+    "categories": {
+      "names": 20,
+      "emails": 10,
+      "phones": 10,
+      "addresses": 10,
+      "dobs": 9
+    }
+  }
+}

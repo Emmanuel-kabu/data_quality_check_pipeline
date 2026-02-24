@@ -1,6 +1,6 @@
 DATA QUALITY PROFILE REPORT
 ============================================================
-Generated: 2026-02-22 11:29:43
+Generated: 2026-02-24 11:23:47
 Dataset: customers_raw.csv
 Total Rows: 10
 Total Columns: 10
@@ -25,11 +25,11 @@ DATA TYPES:
   - last_name: STRING ✓
   - email: STRING ✓
   - phone: STRING ✓
-  - date_of_birth: DATE ✗ (should be DATE, stored as str)
+  - date_of_birth: DATE ✗ (should be DATE, stored as object)
   - address: STRING ✓
   - income: NUMERIC ✓
   - account_status: CATEGORICAL ✓
-  - created_date: DATE ✗ (should be DATE, stored as str)
+  - created_date: DATE ✗ (should be DATE, stored as object)
 
 QUALITY ISSUES:
 ----------------------------------------
@@ -38,8 +38,8 @@ QUALITY ISSUES:
   3. [Medium] Missing Values in 'address': 2 missing value(s) (20.0% incomplete), Rows: [2, 9]
   4. [Medium] Missing Values in 'income': 1 missing value(s) (10.0% incomplete), Rows: [3]
   5. [Medium] Missing Values in 'account_status': 1 missing value(s) (10.0% incomplete), Rows: [4]
-  6. [High] Wrong Data Type in 'date_of_birth': Expected DATE but got str
-  7. [High] Wrong Data Type in 'created_date': Expected DATE but got str
+  6. [High] Wrong Data Type in 'date_of_birth': Expected DATE but got object
+  7. [High] Wrong Data Type in 'created_date': Expected DATE but got object
   8. [Medium] Non-standard Phone Format in 'phone': Format '(XXX) XXX-XXXX' found in 1 row(s), Rows: [3]
   9. [Medium] Non-standard Phone Format in 'phone': Format 'XXX.XXX.XXXX' found in 1 row(s), Rows: [8]
   10. [Medium] Non-standard Phone Format in 'phone': Format 'XXXXXXXXXX (no separators)' found in 1 row(s), Rows: [9]

@@ -1,0 +1,70 @@
+GREAT EXPECTATIONS VALIDATION REPORT
+============================================================
+Generated: 2026-02-24 11:24:31
+Engine: built-in
+Suite: customer_data_suite
+
+SUMMARY:
+----------------------------------------
+  Total Expectations: 20
+  Passed: 20
+  Failed: 0
+  Pass Rate: 100.0%
+
+DETAILED RESULTS:
+----------------------------------------
+  [OK] expect_column_to_exist
+      Column: customer_id
+  [OK] expect_column_values_to_not_be_null
+      Column: customer_id
+  [OK] expect_column_values_to_be_unique
+      Column: customer_id
+  [OK] expect_column_values_to_be_of_type
+      Column: customer_id
+      type_: int64
+  [OK] expect_column_to_exist
+      Column: first_name
+  [OK] expect_column_value_lengths_to_be_between
+      Column: first_name
+      min_value: 2
+      max_value: 50
+      mostly: 0.9
+  [OK] expect_column_to_exist
+      Column: last_name
+  [OK] expect_column_value_lengths_to_be_between
+      Column: last_name
+      min_value: 2
+      max_value: 50
+      mostly: 0.9
+  [OK] expect_column_to_exist
+      Column: email
+  [OK] expect_column_values_to_not_be_null
+      Column: email
+  [OK] expect_column_values_to_match_regex
+      Column: email
+      regex: ^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$
+      mostly: 0.95
+  [OK] expect_column_to_exist
+      Column: phone
+  [OK] expect_column_values_to_not_be_null
+      Column: phone
+      mostly: 0.9
+  [OK] expect_column_to_exist
+      Column: income
+  [OK] expect_column_values_to_be_between
+      Column: income
+      min_value: 0
+      max_value: 10000000
+      mostly: 0.95
+  [OK] expect_column_to_exist
+      Column: account_status
+  [OK] expect_column_values_to_be_in_set
+      Column: account_status
+      value_set: ['active', 'inactive', 'suspended']
+      mostly: 0.9
+  [OK] expect_column_to_exist
+      Column: date_of_birth
+  [OK] expect_column_to_exist
+      Column: created_date
+  [OK] expect_column_to_exist
+      Column: address

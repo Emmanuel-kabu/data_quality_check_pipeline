@@ -1,0 +1,31 @@
+DATA CONTRACT VALIDATION REPORT
+============================================================
+Generated: 2026-02-24 11:23:47
+Contract Version: 1.0.0
+Contract Owner: data-engineering-team
+Overall Status: FAIL
+
+SCHEMA VALIDATION:
+----------------------------------------
+  All schema checks passed [OK]
+
+SLA RESULTS:
+----------------------------------------
+  completeness: FAIL
+    target_pct: 95.0
+    actual_pct: 89.0
+    total_cells: 100
+    null_cells: 11
+  duplicates: PASS
+    target_max_pct: 1.0
+    actual_pct: 0.0
+    duplicate_count: 0
+  freshness: FAIL
+    target_max_hours: 24
+    data_age_hours: 18419.4
+    data_timestamp: 2024-01-19T00:00:00
+
+TOTAL VIOLATIONS: 2
+----------------------------------------
+  [HIGH] completeness_sla: Completeness 89.0% below SLA target 95.0%
+  [MEDIUM] freshness_sla: Data age 18419.4h exceeds SLA max 24h

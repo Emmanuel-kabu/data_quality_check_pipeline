@@ -1,67 +1,146 @@
-PIPELINE EXECUTION REPORT
+PIPELINE EXECUTION REPORT (PRODUCTION)
 ============================================================
-Start Time:  2026-02-22 11:29:43
-End Time:    2026-02-22 11:29:43
-Duration:    0.11 seconds
+Run ID:      20260224_112346
+Start Time:  2026-02-24 11:23:46
+End Time:    2026-02-24 11:24:31
+Duration:    44.51 seconds
 
 Stage: LOAD
-  Status: ✓ SUCCESS
-  ✓ Loaded customers_raw.csv
-  ✓ 10 rows, 10 columns
+  Status: [OK] SUCCESS
+    Loaded customers_raw.csv
+    10 rows, 10 columns
+
+Stage: IDEMPOTENCY
+  Status: [OK] SUCCESS
+    Input changed — proceeding with pipeline
 
 Stage: PROFILE
-  Status: ✓ SUCCESS
-  ✓ first_name: 1 missing (90.0% complete)
-  ✓ last_name: 1 missing (90.0% complete)
-  ✓ address: 2 missing (80.0% complete)
-  ✓ income: 1 missing (90.0% complete)
-  ✓ account_status: 1 missing (90.0% complete)
-  ✓ Total quality issues found: 32
+  Status: [OK] SUCCESS
+    first_name: 1 missing (90.0% complete)
+    last_name: 1 missing (90.0% complete)
+    address: 2 missing (80.0% complete)
+    income: 1 missing (90.0% complete)
+    account_status: 1 missing (90.0% complete)
+    Total quality issues found: 32
+
+Stage: CONTRACT
+  Status: [!!] WARNING
+    Contract version: 1.0.0
+    Overall: FAIL
+    Violations: 4
+      SLA completeness: FAIL
+      SLA duplicates: PASS
+      SLA freshness: FAIL
 
 Stage: VALIDATE (pre-clean)
-  Status: ✓ SUCCESS
-  ✓ Passed: 2 rows
-  ✓ Failed: 8 rows
-  ✓ Total failures: 15
+  Status: [OK] SUCCESS
+    Passed: 2 rows
+    Failed: 8 rows
+    Total failures: 15
+
+Stage: STATISTICAL
+  Status: [OK] SUCCESS
+    Outliers detected: 0
+    Distribution issues: 1
+      income: mean=92,000, median=95,000, outliers=0
+
+Stage: THRESHOLD
+  Status: [!!] WARNING
+    Failure rate: 80.0% (8/10 rows)
+    Hard threshold: 5.0%
+    Review threshold (pass rate): 80.0%
+    Status: Pass rate 20.0% below review threshold 80.0%
+
+Stage: HUMAN REVIEW
+  Status: [XX] COMPLETED
+    Decision: CONTINUE
+    Reviewer: operator
+    Reason: Because we need the data for analytics
 
 Stage: CLEAN
-  Status: ✓ SUCCESS
-  ✓ Phone format: Converted to XXX-XXX-XXXX (3 rows affected)
-  ✓ Date format (date_of_birth): Converted to YYYY-MM-DD (1 rows affected)
-  ✓ Date format (created_date): Converted to YYYY-MM-DD (1 rows affected)
-  ✓ Name case (last_name): Applied title case (1 rows affected)
-  ✓ Email case: Lowered to standard format (1 rows affected)
-  ✓ first_name: 1 row(s) missing -> filled with '[UNKNOWN]'
-  ✓ last_name: 1 row(s) missing -> filled with '[UNKNOWN]'
-  ✓ address: 2 row(s) missing -> filled with '[UNKNOWN]'
-  ✓ income: 1 row(s) missing -> filled with '0'
-  ✓ account_status: 1 row(s) missing -> filled with 'unknown'
-  ✓ Validation before: 8 rows failed
-  ✓ Validation after:  7 rows failed
+  Status: [OK] SUCCESS
+    Phone format: Converted to XXX-XXX-XXXX (3 rows affected)
+    Date format (date_of_birth): Converted to YYYY-MM-DD (1 rows affected)
+    Date format (created_date): Converted to YYYY-MM-DD (1 rows affected)
+    Name case (last_name): Applied title case (1 rows affected)
+    Email case: Lowered to standard format (1 rows affected)
+    first_name: 1 row(s) missing -> filled with '[UNKNOWN]'
+    last_name: 1 row(s) missing -> filled with '[UNKNOWN]'
+    address: 2 row(s) missing -> filled with '[UNKNOWN]'
+    income: 1 row(s) missing -> filled with '0'
+    account_status: 1 row(s) missing -> filled with 'unknown'
+    Validation before: 8 rows failed
+    Validation after:  7 rows failed
+
+Stage: QUARANTINE
+  Status: [OK] SUCCESS
+    Quarantined records: 1
+    Still in dataset: 10 rows
+      HIGH: 1
+
+Stage: GE VALIDATE
+  Status: [OK] SUCCESS
+    Engine: built-in
+    Expectations: 20
+    Passed: 20
+    Failed: 0
+    Pass rate: 100.0%
 
 Stage: DETECT PII
-  Status: ✓ SUCCESS
-  ✓ email: 10 found
-  ✓ phone: 10 found
-  ✓ names: 10 found
-  ✓ address: 10 found
-  ✓ date_of_birth: 9 found
+  Status: [OK] SUCCESS
+    email: 10 found
+    phone: 10 found
+    names: 10 found
+    address: 10 found
+    date_of_birth: 9 found
 
 Stage: MASK PII
-  Status: ✓ SUCCESS
-  ✓ Names masked: 20
-  ✓ Emails masked: 10
-  ✓ Phones masked: 10
-  ✓ Addresses masked: 10
-  ✓ DOBs masked: 9
+  Status: [OK] SUCCESS
+    Names masked: 20
+    Emails masked: 10
+    Phones masked: 10
+    Addresses masked: 10
+    DOBs masked: 9
+
+Stage: VERSION
+  Status: [OK] SUCCESS
+    Version: v_20260224_112346
+    Rows: 10
+    Old versions cleaned: 0
+
+Stage: METRICS
+  Status: [OK] SUCCESS
+    Metrics saved and exported to Prometheus format
+    Degradation alerts: 0
+
+Stage: CLOUD UPLOAD
+  Status: [OK] SUCCESS
+    Uploaded: {'cleaned': 's3://data-quality-report-2002/cleaned/customers_cleaned_20260224_112431.csv', 'masked': 's3://data-quality-report-2002/cleaned/customers_masked_20260224_112432.csv', 'reports': ['s3://data-quality-report-2002/reports/cleaning_log_20260224_112432.txt', 's3://data-quality-report-2002/reports/data_contract_report_20260224_112433.txt', 's3://data-quality-report-2002/reports/data_quality_report_20260224_112433.txt', 's3://data-quality-report-2002/reports/dead_letter_queue_report_20260224_112434.txt', 's3://data-quality-report-2002/reports/ge_validation_report_20260224_112434.txt', 's3://data-quality-report-2002/reports/human_review_report_20260224_112435.txt', 's3://data-quality-report-2002/reports/masked_sample_20260224_112435.txt', 's3://data-quality-report-2002/reports/pii_detection_report_20260224_112436.txt', 's3://data-quality-report-2002/reports/pipeline_execution_report_20260224_112436.txt', 's3://data-quality-report-2002/reports/statistical_validation_report_20260224_112437.txt', 's3://data-quality-report-2002/reports/validation_results_20260224_112437.txt']}
+
+Stage: NOTIFY
+  Status: [OK] SUCCESS
+    Notifications dispatched (SUCCESS)
 
 SUMMARY:
 ----------------------------------------
-  Input:   10 rows (messy)
-  Cleaned: 10 rows (clean, validated)
-  Masked:  10 rows (PII protected)
-  Quality: PASS
-  PII Risk: MITIGATED (all masked)
+  Input:        10 rows (raw)
+  Cleaned:      10 rows (validated)
+  Masked:       10 rows (PII protected)
+  Quarantined:  1 rows (in DLQ)
+  Version:      v_20260224_112346
+
+PRODUCTION FEATURES:
+----------------------------------------
+  Human Review:      Enabled
+  Cloud Storage:     Enabled
+  Notifications:     Active
+  Dead Letter Queue: 1 records
+  Versioning:        1 versions
+  Metrics Export:    Prometheus + JSON
+
+HUMAN REVIEW DECISIONS:
+----------------------------------------
+  CONTINUE by operator — Because we need the data for analytics
 
 OUTPUT FILES:
 ----------------------------------------
@@ -72,6 +151,12 @@ OUTPUT FILES:
   - validation_results.txt
   - cleaning_log.txt
   - masked_sample.txt
+  - statistical_validation_report.txt
+  - data_contract_report.txt
+  - ge_validation_report.txt
+  - dead_letter_queue_report.txt
+  - human_review_report.txt
   - pipeline_execution_report.txt
+  - metrics/ (Prometheus + JSON)
 
-Status: SUCCESS ✓
+Status: SUCCESS [OK]

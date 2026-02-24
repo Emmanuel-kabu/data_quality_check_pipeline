@@ -1,0 +1,128 @@
+# ============================================================================
+# Data Quality Governance Pipeline — Docker Compose
+# ============================================================================
+# Services:
+#   - pipeline:    Main data quality pipeline container
+#   - prometheus:  Metrics collection and alerting
+#   - grafana:     Visualization dashboard
+#   - airflow:     Workflow orchestration (optional)
+# ============================================================================
+
+version: "3.8"
+
+services:
+  # --------------------------------------------------------------------------
+  # Data Quality Pipeline
+  # --------------------------------------------------------------------------
+  pipeline:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dq-pipeline
+    environment:
+      # Human review settings
+      - HUMAN_REVIEW_ENABLED=true
+      - REVIEW_TIMEOUT=300
+      - REVIEW_TIMEOUT_ACTION=quarantine
+      # Notification settings (configure for production)
+      - SLACK_ENABLED=false
+      - SLACK_WEBHOOK_URL=
+      - SLACK_CHANNEL=#data-quality-alerts
+      - EMAIL_ENABLED=false
+      - PAGERDUTY_ENABLED=false
+      # Cloud storage (configure for production)
+      - CLOUD_STORAGE_ENABLED=false
+      - CLOUD_PROVIDER=s3
+      - CLOUD_BUCKET=data-quality-pipeline
+      # Retry settings
+      - MAX_RETRIES=3
+    volumes:
+      - ./data:/app/data
+      - ./reports:/app/reports
+    networks:
+      - dq-network
+    depends_on:
+      - prometheus
+
+  # --------------------------------------------------------------------------
+  # Prometheus — Metrics Collection
+  # --------------------------------------------------------------------------
+  prometheus:
+    image: prom/prometheus:v2.50.0
+    container_name: dq-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./prometheus/alerts.yml:/etc/prometheus/alerts.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--storage.tsdb.retention.time=30d"
+      - "--web.enable-lifecycle"
+    networks:
+      - dq-network
+
+  # --------------------------------------------------------------------------
+  # Grafana — Visualization Dashboard
+  # --------------------------------------------------------------------------
+  grafana:
+    image: grafana/grafana:10.3.0
+    container_name: dq-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_INSTALL_PLUGINS=grafana-piechart-panel
+      - GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH=/etc/grafana/provisioning/dashboards/data_quality_dashboard.json
+    volumes:
+      - ./grafana/provisioning/datasources.yaml:/etc/grafana/provisioning/datasources/datasources.yaml:ro
+      - ./grafana/provisioning/dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml:ro
+      - ./grafana/dashboards/data_quality_dashboard.json:/etc/grafana/provisioning/dashboards/data_quality_dashboard.json:ro
+      - grafana-data:/var/lib/grafana
+    depends_on:
+      - prometheus
+    networks:
+      - dq-network
+
+  # --------------------------------------------------------------------------
+  # Airflow (all-in-one for dev — use CeleryExecutor for production)
+  # --------------------------------------------------------------------------
+  airflow:
+    image: apache/airflow:2.8.1-python3.11
+    container_name: dq-airflow
+    ports:
+      - "8080:8080"
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=SequentialExecutor
+      - AIRFLOW__CORE__LOAD_EXAMPLES=false
+      - AIRFLOW__CORE__DAGS_FOLDER=/opt/airflow/dags
+      - AIRFLOW__WEBSERVER__SECRET_KEY=data-quality-pipeline-secret
+      - _AIRFLOW_DB_MIGRATE=true
+      - _AIRFLOW_WWW_USER_CREATE=true
+      - _AIRFLOW_WWW_USER_USERNAME=admin
+      - _AIRFLOW_WWW_USER_PASSWORD=admin
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./src:/opt/airflow/dags/src
+      - ./data:/opt/airflow/dags/data
+      - ./reports:/opt/airflow/dags/reports
+    entrypoint: >
+      bash -c "
+        airflow db migrate &&
+        airflow users create --username admin --password admin --firstname Admin --lastname User --role Admin --email admin@example.com || true &&
+        airflow webserver --port 8080 &
+        airflow scheduler
+      "
+    networks:
+      - dq-network
+
+volumes:
+  prometheus-data:
+  grafana-data:
+
+networks:
+  dq-network:
+    driver: bridge
