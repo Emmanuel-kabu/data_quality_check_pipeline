@@ -1,6 +1,6 @@
 DATA CONTRACT VALIDATION REPORT
 ============================================================
-Generated: 2026-02-24 11:23:47
+Generated: 2026-02-24 14:03:06
 Contract Version: 1.0.0
 Contract Owner: data-engineering-team
 Overall Status: FAIL
@@ -22,10 +22,10 @@ SLA RESULTS:
     duplicate_count: 0
   freshness: FAIL
     target_max_hours: 24
-    data_age_hours: 18419.4
+    data_age_hours: 18422.05
     data_timestamp: 2024-01-19T00:00:00
 
 TOTAL VIOLATIONS: 2
 ----------------------------------------
   [HIGH] completeness_sla: Completeness 89.0% below SLA target 95.0%
-  [MEDIUM] freshness_sla: Data age 18419.4h exceeds SLA max 24h
+  [MEDIUM] freshness_sla: Data age 18422.1h exceeds SLA max 24h

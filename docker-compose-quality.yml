@@ -36,6 +36,8 @@ services:
       - CLOUD_BUCKET=data-quality-pipeline
       # Retry settings
       - MAX_RETRIES=3
+      # Pushgateway for metrics
+      - PUSH_GATEWAY_URL=http://pushgateway:9091
     volumes:
       - ./data:/app/data
       - ./reports:/app/reports
@@ -43,6 +45,18 @@ services:
       - dq-network
     depends_on:
       - prometheus
+      - pushgateway
+
+  # --------------------------------------------------------------------------
+  # Pushgateway — Metrics receiver for batch jobs
+  # --------------------------------------------------------------------------
+  pushgateway:
+    image: prom/pushgateway:v1.7.0
+    container_name: dq-pushgateway
+    ports:
+      - "9091:9091"
+    networks:
+      - dq-network
 
   # --------------------------------------------------------------------------
   # Prometheus — Metrics Collection
@@ -109,13 +123,7 @@ services:
       - ./src:/opt/airflow/dags/src
       - ./data:/opt/airflow/dags/data
       - ./reports:/opt/airflow/dags/reports
-    entrypoint: >
-      bash -c "
-        airflow db migrate &&
-        airflow users create --username admin --password admin --firstname Admin --lastname User --role Admin --email admin@example.com || true &&
-        airflow webserver --port 8080 &
-        airflow scheduler
-      "
+    command: standalone
     networks:
       - dq-network
 

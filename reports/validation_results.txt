@@ -1,6 +1,6 @@
 VALIDATION RESULTS
 ============================================================
-Generated: 2026-02-24 11:23:47
+Generated: 2026-02-24 14:03:06
 Dataset: customers_raw.csv
 
 PASS: 2 rows passed all checks

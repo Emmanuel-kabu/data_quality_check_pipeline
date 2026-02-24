@@ -13,7 +13,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from src.config import METRICS_DIR, METRICS_FILE, REPORTS_DIR
+from src.config import METRICS_DIR, METRICS_FILE, METRICS_EXPORT_CONFIG, REPORTS_DIR
 
 logger = logging.getLogger(__name__)
 
@@ -271,3 +271,64 @@ class MetricsCollector:
             self.add_alert("MEDIUM", alert["message"])
 
         return alerts
+
+    # ------------------------------------------------------------------
+    # Push to Prometheus Pushgateway (for batch jobs)
+    # ------------------------------------------------------------------
+    def push_to_pushgateway(self, gateway_url: str = "") -> bool:
+        """
+        Push current metrics to Prometheus Pushgateway.
+        This is the standard pattern for batch/short-lived jobs.
+        """
+        url = gateway_url or METRICS_EXPORT_CONFIG.get("push_gateway_url", "http://localhost:9091")
+
+        try:
+            from prometheus_client import CollectorRegistry, Gauge, push_to_gateway
+        except ImportError:
+            logger.warning("prometheus_client not installed -- skipping pushgateway")
+            return False
+
+        try:
+            registry = CollectorRegistry()
+            q = self.metrics.get("quality", {})
+            p = self.metrics.get("performance", {})
+            pii = self.metrics.get("pii", {})
+
+            # -- Quality gauges ------------------------------------------------
+            def _gauge(name: str, doc: str, value: float) -> None:
+                g = Gauge(name, doc, registry=registry)
+                g.set(value)
+
+            _gauge("dq_total_rows", "Total rows processed", q.get("total_rows", 0))
+            _gauge("dq_passed_rows", "Rows that passed validation", q.get("passed_rows", 0))
+            _gauge("dq_failed_rows", "Rows that failed validation", q.get("failed_rows", 0))
+            _gauge("dq_quarantined_rows", "Rows quarantined in DLQ", q.get("quarantined_rows", 0))
+            _gauge("dq_pass_rate_pct", "Validation pass rate percentage", q.get("pass_rate_pct", 0))
+            _gauge("dq_completeness_pct", "Data completeness percentage", q.get("completeness_pct", 0))
+            _gauge("dq_outlier_count", "Number of statistical outliers", q.get("outlier_count", 0))
+
+            # -- Performance gauges --------------------------------------------
+            _gauge("dq_duration_seconds", "Pipeline execution duration", p.get("total_duration_seconds", 0))
+            _gauge("dq_rows_per_second", "Processing throughput", p.get("rows_per_second", 0))
+
+            # -- PII gauges ----------------------------------------------------
+            _gauge("dq_pii_fields_total", "Total PII fields detected", pii.get("total_pii_fields", 0))
+            _gauge("dq_pii_masked_fields", "Total PII fields masked", pii.get("masked_fields", 0))
+
+            # -- Stage duration gauges -----------------------------------------
+            for stage_name, stage_data in self.metrics.get("stages", {}).items():
+                safe = stage_name.lower().replace(" ", "_").replace("-", "_")
+                g = Gauge(
+                    f"dq_stage_{safe}_duration_ms",
+                    f"{stage_name} stage duration in ms",
+                    registry=registry,
+                )
+                g.set(stage_data.get("duration_ms", 0))
+
+            push_to_gateway(url, job="data_quality_pipeline", registry=registry)
+            logger.info("Metrics pushed to Pushgateway at %s", url)
+            return True
+
+        except Exception as exc:
+            logger.warning("Failed to push metrics to Pushgateway: %s", exc)
+            return False

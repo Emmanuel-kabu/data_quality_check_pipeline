@@ -67,6 +67,11 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="List all dataset versions and exit",
     )
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Force pipeline run even if input is unchanged (bypass idempotency)",
+    )
     return parser.parse_args()
 
 
@@ -121,7 +126,7 @@ def main() -> None:
         sys.exit(1)
 
     try:
-        pipeline = Pipeline(input_path=input_path)
+        pipeline = Pipeline(input_path=input_path, force=args.force)
         pipeline.run()
         logger.info("Pipeline complete. Reports saved to %s", REPORTS_DIR)
     except ThresholdBreachError as exc:

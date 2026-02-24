@@ -1,7 +1,5 @@
 {
-  "annotations": {
-    "list": []
-  },
+  "annotations": { "list": [] },
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
@@ -19,12 +17,14 @@
     {
       "title": "Validation Pass Rate (%)",
       "type": "gauge",
-      "datasource": "Prometheus",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
       "gridPos": { "h": 8, "w": 6, "x": 0, "y": 1 },
       "targets": [
         {
           "expr": "dq_pass_rate_pct",
-          "legendFormat": "Pass Rate"
+          "legendFormat": "Pass Rate",
+          "refId": "A",
+          "instant": true
         }
       ],
       "fieldConfig": {
@@ -40,23 +40,27 @@
           "min": 0,
           "max": 100,
           "unit": "percent"
-        }
+        },
+        "overrides": []
       },
       "options": {
-        "reduceOptions": { "calcs": ["lastNotNull"] },
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
         "showThresholdLabels": true,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "orientation": "auto"
       }
     },
     {
       "title": "Data Completeness (%)",
       "type": "gauge",
-      "datasource": "Prometheus",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
       "gridPos": { "h": 8, "w": 6, "x": 6, "y": 1 },
       "targets": [
         {
           "expr": "dq_completeness_pct",
-          "legendFormat": "Completeness"
+          "legendFormat": "Completeness",
+          "refId": "A",
+          "instant": true
         }
       ],
       "fieldConfig": {
@@ -72,21 +76,27 @@
           "min": 0,
           "max": 100,
           "unit": "percent"
-        }
+        },
+        "overrides": []
       },
       "options": {
-        "reduceOptions": { "calcs": ["lastNotNull"] }
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "orientation": "auto"
       }
     },
     {
       "title": "Total Rows Processed",
       "type": "stat",
-      "datasource": "Prometheus",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
       "gridPos": { "h": 4, "w": 4, "x": 12, "y": 1 },
       "targets": [
         {
           "expr": "dq_total_rows",
-          "legendFormat": "Total"
+          "legendFormat": "Total",
+          "refId": "A",
+          "instant": true
         }
       ],
       "fieldConfig": {
@@ -97,18 +107,28 @@
               { "color": "blue", "value": null }
             ]
           }
-        }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "textMode": "auto"
       }
     },
     {
       "title": "Passed Rows",
       "type": "stat",
-      "datasource": "Prometheus",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
       "gridPos": { "h": 4, "w": 4, "x": 16, "y": 1 },
       "targets": [
         {
           "expr": "dq_passed_rows",
-          "legendFormat": "Passed"
+          "legendFormat": "Passed",
+          "refId": "A",
+          "instant": true
         }
       ],
       "fieldConfig": {
@@ -119,18 +139,28 @@
               { "color": "green", "value": null }
             ]
           }
-        }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "textMode": "auto"
       }
     },
     {
       "title": "Failed Rows",
       "type": "stat",
-      "datasource": "Prometheus",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
       "gridPos": { "h": 4, "w": 4, "x": 20, "y": 1 },
       "targets": [
         {
           "expr": "dq_failed_rows",
-          "legendFormat": "Failed"
+          "legendFormat": "Failed",
+          "refId": "A",
+          "instant": true
         }
       ],
       "fieldConfig": {
@@ -143,18 +173,28 @@
               { "color": "red", "value": 20 }
             ]
           }
-        }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "textMode": "auto"
       }
     },
     {
       "title": "Quarantined Rows (DLQ)",
       "type": "stat",
-      "datasource": "Prometheus",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
       "gridPos": { "h": 4, "w": 4, "x": 12, "y": 5 },
       "targets": [
         {
           "expr": "dq_quarantined_rows",
-          "legendFormat": "Quarantined"
+          "legendFormat": "Quarantined",
+          "refId": "A",
+          "instant": true
         }
       ],
       "fieldConfig": {
@@ -167,18 +207,28 @@
               { "color": "red", "value": 10 }
             ]
           }
-        }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "textMode": "auto"
       }
     },
     {
       "title": "Outliers Detected",
       "type": "stat",
-      "datasource": "Prometheus",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
       "gridPos": { "h": 4, "w": 4, "x": 16, "y": 5 },
       "targets": [
         {
           "expr": "dq_outlier_count",
-          "legendFormat": "Outliers"
+          "legendFormat": "Outliers",
+          "refId": "A",
+          "instant": true
         }
       ],
       "fieldConfig": {
@@ -191,18 +241,28 @@
               { "color": "red", "value": 10 }
             ]
           }
-        }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "textMode": "auto"
       }
     },
     {
       "title": "Pipeline Duration (s)",
       "type": "stat",
-      "datasource": "Prometheus",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
       "gridPos": { "h": 4, "w": 4, "x": 20, "y": 5 },
       "targets": [
         {
           "expr": "dq_duration_seconds",
-          "legendFormat": "Duration"
+          "legendFormat": "Duration",
+          "refId": "A",
+          "instant": true
         }
       ],
       "fieldConfig": {
@@ -217,7 +277,15 @@
               { "color": "red", "value": 120 }
             ]
           }
-        }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "textMode": "auto"
       }
     },
     {
@@ -230,12 +298,14 @@
     {
       "title": "Pass Rate Over Time",
       "type": "timeseries",
-      "datasource": "Prometheus",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
       "gridPos": { "h": 8, "w": 12, "x": 0, "y": 10 },
       "targets": [
         {
           "expr": "dq_pass_rate_pct",
-          "legendFormat": "Pass Rate %"
+          "legendFormat": "Pass Rate %",
+          "refId": "A",
+          "range": true
         }
       ],
       "fieldConfig": {
@@ -258,7 +328,8 @@
               { "color": "green", "value": 95 }
             ]
           }
-        }
+        },
+        "overrides": []
       },
       "options": {
         "tooltip": { "mode": "multi" },
@@ -268,12 +339,14 @@
     {
       "title": "Completeness Over Time",
       "type": "timeseries",
-      "datasource": "Prometheus",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
       "gridPos": { "h": 8, "w": 12, "x": 12, "y": 10 },
       "targets": [
         {
           "expr": "dq_completeness_pct",
-          "legendFormat": "Completeness %"
+          "legendFormat": "Completeness %",
+          "refId": "A",
+          "range": true
         }
       ],
       "fieldConfig": {
@@ -289,31 +362,20 @@
           "min": 0,
           "max": 100,
           "unit": "percent"
-        }
+        },
+        "overrides": []
       }
     },
     {
       "title": "Rows Processed Over Time",
       "type": "timeseries",
-      "datasource": "Prometheus",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
       "gridPos": { "h": 8, "w": 12, "x": 0, "y": 18 },
       "targets": [
-        {
-          "expr": "dq_total_rows",
-          "legendFormat": "Total"
-        },
-        {
-          "expr": "dq_passed_rows",
-          "legendFormat": "Passed"
-        },
-        {
-          "expr": "dq_failed_rows",
-          "legendFormat": "Failed"
-        },
-        {
-          "expr": "dq_quarantined_rows",
-          "legendFormat": "Quarantined"
-        }
+        { "expr": "dq_total_rows", "legendFormat": "Total", "refId": "A", "range": true },
+        { "expr": "dq_passed_rows", "legendFormat": "Passed", "refId": "B", "range": true },
+        { "expr": "dq_failed_rows", "legendFormat": "Failed", "refId": "C", "range": true },
+        { "expr": "dq_quarantined_rows", "legendFormat": "Quarantined", "refId": "D", "range": true }
       ],
       "fieldConfig": {
         "defaults": {
@@ -324,18 +386,21 @@
             "fillOpacity": 50,
             "stacking": { "mode": "normal" }
           }
-        }
+        },
+        "overrides": []
       }
     },
     {
       "title": "Pipeline Duration Trend",
       "type": "timeseries",
-      "datasource": "Prometheus",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
       "gridPos": { "h": 8, "w": 12, "x": 12, "y": 18 },
       "targets": [
         {
           "expr": "dq_duration_seconds",
-          "legendFormat": "Duration (s)"
+          "legendFormat": "Duration (s)",
+          "refId": "A",
+          "range": true
         }
       ],
       "fieldConfig": {
@@ -349,7 +414,8 @@
             "pointSize": 5,
             "showPoints": "always"
           }
-        }
+        },
+        "overrides": []
       }
     },
     {
@@ -360,40 +426,87 @@
       "panels": []
     },
     {
-      "title": "PII Fields Detected vs Masked",
-      "type": "barchart",
-      "datasource": "Prometheus",
-      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 27 },
+      "title": "PII Fields Detected",
+      "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "gridPos": { "h": 8, "w": 6, "x": 0, "y": 27 },
       "targets": [
         {
           "expr": "dq_pii_fields_total",
-          "legendFormat": "Detected"
-        },
-        {
-          "expr": "dq_pii_masked_fields",
-          "legendFormat": "Masked"
+          "legendFormat": "Detected",
+          "refId": "A",
+          "instant": true
         }
       ],
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "palette-classic" }
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "orange", "value": 10 },
+              { "color": "red", "value": 50 }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "textMode": "auto"
+      }
+    },
+    {
+      "title": "PII Fields Masked",
+      "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "gridPos": { "h": 8, "w": 6, "x": 6, "y": 27 },
+      "targets": [
+        {
+          "expr": "dq_pii_masked_fields",
+          "legendFormat": "Masked",
+          "refId": "A",
+          "instant": true
         }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "steps": [
+              { "color": "red", "value": null },
+              { "color": "green", "value": 1 }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "textMode": "auto"
       }
     },
     {
       "title": "Processing Throughput",
       "type": "stat",
-      "datasource": "Prometheus",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
       "gridPos": { "h": 8, "w": 6, "x": 12, "y": 27 },
       "targets": [
         {
           "expr": "dq_rows_per_second",
-          "legendFormat": "Rows/sec"
+          "legendFormat": "Rows/sec",
+          "refId": "A",
+          "instant": true
         }
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "rowsps",
           "color": { "mode": "thresholds" },
           "thresholds": {
             "steps": [
@@ -402,45 +515,36 @@
               { "color": "green", "value": 500 }
             ]
           }
-        }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "textMode": "auto"
       }
     },
     {
       "title": "Stage Durations (ms)",
       "type": "barchart",
-      "datasource": "Prometheus",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
       "gridPos": { "h": 8, "w": 6, "x": 18, "y": 27 },
       "targets": [
-        { "expr": "dq_stage_load_duration_ms", "legendFormat": "Load" },
-        { "expr": "dq_stage_profile_duration_ms", "legendFormat": "Profile" },
-        { "expr": "dq_stage_validate_duration_ms", "legendFormat": "Validate" },
-        { "expr": "dq_stage_clean_duration_ms", "legendFormat": "Clean" },
-        { "expr": "dq_stage_detect_pii_duration_ms", "legendFormat": "Detect PII" },
-        { "expr": "dq_stage_mask_pii_duration_ms", "legendFormat": "Mask PII" }
+        { "expr": "dq_stage_load_duration_ms", "legendFormat": "Load", "refId": "A", "instant": true },
+        { "expr": "dq_stage_profile_duration_ms", "legendFormat": "Profile", "refId": "B", "instant": true },
+        { "expr": "dq_stage_validate_duration_ms", "legendFormat": "Validate", "refId": "C", "instant": true },
+        { "expr": "dq_stage_clean_duration_ms", "legendFormat": "Clean", "refId": "D", "instant": true },
+        { "expr": "dq_stage_detect_pii_duration_ms", "legendFormat": "Detect PII", "refId": "E", "instant": true },
+        { "expr": "dq_stage_mask_pii_duration_ms", "legendFormat": "Mask PII", "refId": "F", "instant": true }
       ],
       "fieldConfig": {
         "defaults": {
           "unit": "ms",
           "color": { "mode": "palette-classic" }
-        }
-      }
-    },
-    {
-      "title": "Alerts",
-      "type": "row",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 35 },
-      "collapsed": false,
-      "panels": []
-    },
-    {
-      "title": "Active Alerts",
-      "type": "alertlist",
-      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 36 },
-      "options": {
-        "showOptions": "current",
-        "maxItems": 20,
-        "sortOrder": 1,
-        "alertName": "dq_"
+        },
+        "overrides": []
       }
     }
   ],
@@ -448,7 +552,7 @@
   "style": "dark",
   "tags": ["data-quality", "pipeline", "governance"],
   "templating": { "list": [] },
-  "time": { "from": "now-7d", "to": "now" },
+  "time": { "from": "now-1h", "to": "now" },
   "timepicker": {},
   "timezone": "utc",
   "title": "Data Quality Governance Dashboard",

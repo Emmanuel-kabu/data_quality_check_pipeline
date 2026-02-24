@@ -56,4 +56,4 @@ HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
 
 # Default command
 ENTRYPOINT ["python", "main.py"]
-CMD ["--input", "data/customers_raw.csv"]
+CMD ["--input", "data/customers_raw.csv", "--force"]

@@ -79,8 +79,9 @@ class ThresholdBreachError(PipelineError):
 class Pipeline:
     """Production-ready end-to-end data quality governance pipeline."""
 
-    def __init__(self, input_path: Path = RAW_CSV) -> None:
+    def __init__(self, input_path: Path = RAW_CSV, force: bool = False) -> None:
         self.input_path = Path(input_path)
+        self.force = force
         self.df_raw: pd.DataFrame | None = None
         self.df_cleaned: pd.DataFrame | None = None
         self.df_masked: pd.DataFrame | None = None
@@ -627,6 +628,9 @@ class Pipeline:
         self.metrics.save_metrics()
         self.metrics.export_prometheus_metrics()
 
+        # Push metrics to Pushgateway (for Prometheus/Grafana in Docker)
+        pushed = self.metrics.push_to_pushgateway()
+
         # Check for quality degradation trends
         degradation_alerts = self.metrics.detect_quality_degradation()
         for alert in degradation_alerts:
@@ -634,6 +638,7 @@ class Pipeline:
 
         self._log_stage("METRICS", "SUCCESS", [
             "Metrics saved and exported to Prometheus format",
+            f"Pushgateway: {'pushed' if pushed else 'skipped'}",
             f"Degradation alerts: {len(degradation_alerts)}",
         ])
 
@@ -806,7 +811,11 @@ class Pipeline:
             self.load()
 
             # Stage 2: Idempotency check
-            needs_run = self.check_idempotency()
+            if self.force:
+                needs_run = True
+                self._log_stage("IDEMPOTENCY", "SKIPPED", ["--force flag: bypassing idempotency check"])
+            else:
+                needs_run = self.check_idempotency()
             if not needs_run:
                 self.end_time = datetime.now()
                 print(f"\n{'='*60}")

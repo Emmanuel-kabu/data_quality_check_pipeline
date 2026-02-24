@@ -1,9 +1,9 @@
 PIPELINE EXECUTION REPORT (PRODUCTION)
 ============================================================
-Run ID:      20260224_112346
-Start Time:  2026-02-24 11:23:46
-End Time:    2026-02-24 11:24:31
-Duration:    44.51 seconds
+Run ID:      20260224_140306
+Start Time:  2026-02-24 14:03:06
+End Time:    2026-02-24 14:03:06
+Duration:    0.39 seconds
 
 Stage: LOAD
   Status: [OK] SUCCESS
@@ -11,8 +11,8 @@ Stage: LOAD
     10 rows, 10 columns
 
 Stage: IDEMPOTENCY
-  Status: [OK] SUCCESS
-    Input changed — proceeding with pipeline
+  Status: [--] SKIPPED
+    --force flag: bypassing idempotency check
 
 Stage: PROFILE
   Status: [OK] SUCCESS
@@ -53,9 +53,9 @@ Stage: THRESHOLD
 
 Stage: HUMAN REVIEW
   Status: [XX] COMPLETED
-    Decision: CONTINUE
-    Reviewer: operator
-    Reason: Because we need the data for analytics
+    Decision: QUARANTINE
+    Reviewer: system-auto
+    Reason: Non-interactive environment, cannot prompt user
 
 Stage: CLEAN
   Status: [OK] SUCCESS
@@ -104,18 +104,19 @@ Stage: MASK PII
 
 Stage: VERSION
   Status: [OK] SUCCESS
-    Version: v_20260224_112346
+    Version: v_20260224_140306
     Rows: 10
     Old versions cleaned: 0
 
 Stage: METRICS
   Status: [OK] SUCCESS
     Metrics saved and exported to Prometheus format
+    Pushgateway: pushed
     Degradation alerts: 0
 
 Stage: CLOUD UPLOAD
-  Status: [OK] SUCCESS
-    Uploaded: {'cleaned': 's3://data-quality-report-2002/cleaned/customers_cleaned_20260224_112431.csv', 'masked': 's3://data-quality-report-2002/cleaned/customers_masked_20260224_112432.csv', 'reports': ['s3://data-quality-report-2002/reports/cleaning_log_20260224_112432.txt', 's3://data-quality-report-2002/reports/data_contract_report_20260224_112433.txt', 's3://data-quality-report-2002/reports/data_quality_report_20260224_112433.txt', 's3://data-quality-report-2002/reports/dead_letter_queue_report_20260224_112434.txt', 's3://data-quality-report-2002/reports/ge_validation_report_20260224_112434.txt', 's3://data-quality-report-2002/reports/human_review_report_20260224_112435.txt', 's3://data-quality-report-2002/reports/masked_sample_20260224_112435.txt', 's3://data-quality-report-2002/reports/pii_detection_report_20260224_112436.txt', 's3://data-quality-report-2002/reports/pipeline_execution_report_20260224_112436.txt', 's3://data-quality-report-2002/reports/statistical_validation_report_20260224_112437.txt', 's3://data-quality-report-2002/reports/validation_results_20260224_112437.txt']}
+  Status: [--] SKIPPED
+    Cloud storage disabled
 
 Stage: NOTIFY
   Status: [OK] SUCCESS
@@ -127,20 +128,16 @@ SUMMARY:
   Cleaned:      10 rows (validated)
   Masked:       10 rows (PII protected)
   Quarantined:  1 rows (in DLQ)
-  Version:      v_20260224_112346
+  Version:      v_20260224_140306
 
 PRODUCTION FEATURES:
 ----------------------------------------
   Human Review:      Enabled
-  Cloud Storage:     Enabled
+  Cloud Storage:     Disabled
   Notifications:     Active
   Dead Letter Queue: 1 records
-  Versioning:        1 versions
+  Versioning:        3 versions
   Metrics Export:    Prometheus + JSON
-
-HUMAN REVIEW DECISIONS:
-----------------------------------------
-  CONTINUE by operator — Because we need the data for analytics
 
 OUTPUT FILES:
 ----------------------------------------

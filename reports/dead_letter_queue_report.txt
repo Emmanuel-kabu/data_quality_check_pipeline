@@ -1,6 +1,6 @@
 DEAD LETTER QUEUE REPORT
 ============================================================
-Generated: 2026-02-24 11:24:31
+Generated: 2026-02-24 14:03:06
 Total Quarantined Records: 1
 
 QUARANTINE SUMMARY BY SEVERITY:
@@ -10,4 +10,4 @@ QUARANTINE SUMMARY BY SEVERITY:
 QUARANTINED RECORDS (first 20):
 ----------------------------------------
   Row 4: 'unknown' is not a valid status (allowed: active, inactive, suspended) [HIGH]
-    Stage: post_clean_validation | Time: 2026-02-24T11:24:31.056404
+    Stage: post_clean_validation | Time: 2026-02-24T14:03:06.341166
